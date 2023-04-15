@@ -25,7 +25,7 @@ const { Reaction, Thought, User } = require('../models');
 
 module.exports = {
   // Get all students
-  getUser(req, res) {
+  getUsers(req, res) {
     User.find()
       .then(async (users) => {
         const userObj = {
