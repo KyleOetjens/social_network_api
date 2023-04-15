@@ -10,7 +10,7 @@ const thoughtSchema = new Schema(
       max_length: 280,
     },
     username: {
-      type: String,
+      type: Schema.Types.String, ref:`User`,
       required: true,
     },
     createdAt: {

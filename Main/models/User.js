@@ -1,5 +1,5 @@
 const { Schema, model } = require('mongoose');
-const assignmentSchema = require('./Reaction');
+const thoughtsSchema = require('./Reaction');
 
 // Schema to create Student model
 const userSchema = new Schema(
@@ -18,12 +18,19 @@ const userSchema = new Schema(
       max_length: 100,
       match: /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/,
     },
-    thoughts: [thoughtsSchema],
-    friends: [userSchema]
+    thoughts: [{
+      type: Schema.Types.ObjectId,
+      ref: `Thought`,
+    }],
+    friends: [{
+      type: Schema.Types.ObjectId,
+      ref: `User`,
+    }]
   },
   {
     toJSON: {
       virtuals: true,
+      getters: true
     },
     id: false,
   }
