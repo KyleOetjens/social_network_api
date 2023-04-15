@@ -24,7 +24,7 @@ const { Reaction, Thought, User } = require('../models');
 //   ]);
 
 module.exports = {
-  // Get all students
+  // Get all users
   getUsers(req, res) {
     User.find()
       .then(async (users) => {
@@ -39,7 +39,7 @@ module.exports = {
         return res.status(500).json(err);
       });
   },
-  // Get a single student- need to add thoughts
+  // Get a single user- need to add thoughts
   getSingleUser(req, res) {
     User.findOne({ _id: req.params.userId })
       .select('-__v')
@@ -56,13 +56,13 @@ module.exports = {
         return res.status(500).json(err);
       });
   },
-  // create a new student
+  // create a new user
   createUser(req, res) {
     User.create(req.body)
       .then((user) => res.json(user))
       .catch((err) => res.status(500).json(err));
   },
-  // Delete a student and remove them from the course
+  // Delete a user and remove them from the course
   deleteUser(req, res) {
     User.findOneAndRemove({ _id: req.params.userId })
       .then((user) =>
