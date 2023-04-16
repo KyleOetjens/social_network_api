@@ -1,5 +1,5 @@
-const { Schema, model } = require('mongoose');
-
+const { Schema, model,Types } = require('mongoose');
+const format_date = require(`../utils/helpers`)
 //Subdocument for Reactions
 const reactionSchema = new Schema(
   {
@@ -16,14 +16,13 @@ const reactionSchema = new Schema(
       type: Schema.Types.String, ref:`User`,
       required: true,
     },
-    // createdAt: {
-    //   timestamps: true,
-    //   // type: Date,
-    //   // default: Date.now,
-    // },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+      get: timestamp => format_date(timestamp),
+    },
     
   },
-  { timestamps: true},
   {
     toJSON: {
       getters: true,
@@ -47,12 +46,14 @@ const thoughtSchema = new Schema(
     createdAt: {
       type: Date,
       default: Date.now,
+      get: timestamp => format_date(timestamp),
     },
     reactions: [reactionSchema],
   },
   {
     toJSON: {
       virtuals: true,
+      getters: true
     },
     id: false,
   }
@@ -61,6 +62,6 @@ thoughtSchema
 .virtual(`reactionCount`).get(function (){
   return this.reactions.length;
 });
-const Thought = model('thought', thoughtSchema);
+const Thought = model('Thought', thoughtSchema);
 
 module.exports = Thought;

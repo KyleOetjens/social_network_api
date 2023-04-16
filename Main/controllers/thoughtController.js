@@ -42,15 +42,25 @@ module.exports = {
   },
   // Delete a thought
   deleteThought(req, res) {
-    Thought.findOneAndDelete({ _id: req.params.thoughtId })
+    Thought.findOneAndRemove({ _id: req.params.thoughtId })
       .then((thought) =>
         !thought
           ? res.status(404).json({ message: 'No course with that ID' })
-          : User.deleteMany({ _id: { $in: thought.users } })
-      )
-      .then(() => res.json({ message: 'Course and students deleted!' }))
-      .catch((err) => res.status(500).json(err));
-  },
+          : User.findOneAndUpdate(
+            { thoughts: req.params.thoughtId },
+            { $pull: { thoughts: req.params.thoughtId } },
+            { new: true }
+          )
+    )
+    .then((user) =>
+      !user
+        ? res.status(404).json({
+            message: 'Application created but no user with this id!',
+          })
+        : res.json({ message: 'Application successfully deleted!' })
+    )
+    .catch((err) => res.status(500).json(err));
+},
   // Update a thought
   updateThought(req, res) {
     Thought.findOneAndUpdate(
