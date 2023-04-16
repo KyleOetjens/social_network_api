@@ -109,9 +109,10 @@ module.exports = {
   },
   // Remove thought from a user
   removeThought(req, res) {
+    console.log(`removing thought`);
     User.findOneAndUpdate(
       { _id: req.params.userId },
-      { $pull: { thought: { thoughtId: req.params.thoughtId } } },
+      { $pull: { thoughts: { _id: req.params.thoughtId } } },
       { runValidators: true, new: true }
     )
       .then((user) =>

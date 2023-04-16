@@ -43,3 +43,11 @@ userSchema
 const User = model('user', userSchema);
 
 module.exports = User;
+
+
+
+
+// {
+//   type: Schema.Types.ObjectId,
+//   ref: `Thought`,
+// }

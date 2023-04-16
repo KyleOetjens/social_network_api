@@ -21,7 +21,7 @@ router.route('/:userId').get(getSingleUser).put(updateUser).delete(deleteUser);
 router.route('/:userId/thoughts').post(addThought);
 
 // /api/students/:studentId/assignments/:assignmentId
-router.route('/:userId/thoughts/:thoughtId').delete(removeThought);
+router.route('/:userId/thoughts/:thoughtId').put(removeThought);
 
 // router.route(`/:userId/friends`).post(addFriend)
 
