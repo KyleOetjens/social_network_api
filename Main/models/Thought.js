@@ -1,6 +1,37 @@
 const { Schema, model } = require('mongoose');
 
-// Schema to create a course model
+//Subdocument for Reactions
+const reactionSchema = new Schema(
+  {
+    reactionId: {
+      type: Schema.Types.ObjectId,
+      default: () => new Types.ObjectId(),
+    },
+    reactionBody: {
+      type: String,
+      required: true,
+      maxlength: 280,
+    },
+    username: {
+      type: Schema.Types.String, ref:`User`,
+      required: true,
+    },
+    // createdAt: {
+    //   timestamps: true,
+    //   // type: Date,
+    //   // default: Date.now,
+    // },
+    
+  },
+  { timestamps: true},
+  {
+    toJSON: {
+      getters: true,
+    },
+    id: false,
+  }
+);
+// Schema to create a thought model
 const thoughtSchema = new Schema(
   {
     thoughtText: {
@@ -17,12 +48,7 @@ const thoughtSchema = new Schema(
       type: Date,
       default: Date.now,
     },
-    reactions: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'Reaction',
-      },
-    ],
+    reactions: [reactionSchema],
   },
   {
     toJSON: {

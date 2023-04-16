@@ -1,5 +1,5 @@
 const { Schema, model } = require('mongoose');
-const thoughtsSchema = require('./Reaction');
+// const thoughtsSchema = require('./Reaction');
 
 // Schema to create Student model
 const userSchema = new Schema(
