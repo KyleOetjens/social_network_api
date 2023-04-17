@@ -30,7 +30,6 @@ module.exports = {
       .then(async (users) => {
         const userObj = {
           users,
-          // headCount: await headCount(),
         };
         return res.json(userObj);
       })
@@ -39,7 +38,7 @@ module.exports = {
         return res.status(500).json(err);
       });
   },
-  // Get a single user- need to add thoughts
+  // Get a single user
   getSingleUser(req, res) {
     User.findOne({ _id: req.params.userId })
       .select('-__v')
@@ -50,7 +49,6 @@ module.exports = {
           ? res.status(404).json({ message: 'No student with that ID' })
           : res.json({
               user,
-              // grade: await grade(req.params.studentId),
             })
       )
       .catch((err) => {
@@ -64,7 +62,7 @@ module.exports = {
       .then((user) => res.json(user))
       .catch((err) => res.status(500).json(err));
   },
-  // Delete a user and remove them from the course
+  // Delete a user and remove associated thoughts
   deleteUser(req, res) {
     User.findOneAndDelete({ _id: req.params.userId })
       .then((user) =>
@@ -73,7 +71,7 @@ module.exports = {
           : Thought.deleteMany({ _id: { $in: user.thoughts } },
             )
       )
-      .then(() => res.json({ message: 'User and associated apps deleted!' }))
+      .then(() => res.json({ message: 'User and associated thoughts deleted!' }))
       .catch((err) => res.status(500).json(err));
   },
   //Update a user
@@ -85,7 +83,7 @@ module.exports = {
     )
       .then((user) =>
         !user
-          ? res.status(404).json({ message: 'No course with this id!' })
+          ? res.status(404).json({ message: 'No user with this id!' })
           : res.json(user)
       )
       .catch((err) => res.status(500).json(err));
@@ -121,7 +119,7 @@ module.exports = {
         !user
           ? res
               .status(404)
-              .json({ message: 'No student found with that ID :(' })
+              .json({ message: 'No user found with that ID :(' })
           : res.json(user)
       )
       .catch((err) => res.status(500).json(err));
@@ -155,7 +153,7 @@ module.exports = {
         !user
           ? res
               .status(404)
-              .json({ message: 'No student found with that ID :(' })
+              .json({ message: 'No user found with that ID :(' })
           : res.json(user)
       )
       .catch((err) => res.status(500).json(err));

@@ -13,7 +13,7 @@ module.exports = {
       .select('-__v')
       .then((thought) =>
         !thought
-          ? res.status(404).json({ message: 'No course with that ID' })
+          ? res.status(404).json({ message: 'No thought with that ID' })
           : res.json(thought)
       )
       .catch((err) => res.status(500).json(err));
@@ -45,7 +45,7 @@ module.exports = {
     Thought.findOneAndRemove({ _id: req.params.thoughtId })
       .then((thought) =>
         !thought
-          ? res.status(404).json({ message: 'No course with that ID' })
+          ? res.status(404).json({ message: 'No thought with that ID' })
           : User.findOneAndUpdate(
             { thoughts: req.params.thoughtId },
             { $pull: { thoughts: req.params.thoughtId } },
@@ -55,9 +55,9 @@ module.exports = {
     .then((user) =>
       !user
         ? res.status(404).json({
-            message: 'Application created but no user with this id!',
+            message: 'Thought deleted but no user with this id!',
           })
-        : res.json({ message: 'Application successfully deleted!' })
+        : res.json({ message: 'Thought successfully deleted and user updated!' })
     )
     .catch((err) => res.status(500).json(err));
 },
@@ -70,7 +70,7 @@ module.exports = {
     )
       .then((thought) =>
         !thought
-          ? res.status(404).json({ message: 'No course with this id!' })
+          ? res.status(404).json({ message: 'No thought with this id!' })
           : res.json(thought)
       )
       .catch((err) => res.status(500).json(err));
@@ -104,7 +104,7 @@ module.exports = {
         !thought
           ? res
               .status(404)
-              .json({ message: 'No student found with that ID :(' })
+              .json({ message: 'No thought found with that ID :(' })
           : res.json(thought)
       )
       .catch((err) => res.status(500).json(err));
